@@ -163,12 +163,93 @@ footer{
 
 @media(max-width:768px){
 
+    .hero{
+        min-height:40vh;
+        background-position:top;
+        padding:20px 0;
+    }
+
+    .hero-content{
+        padding:20px;
+    }
+
     .hero h1{
         font-size:2rem;
     }
 
+    .hero p{
+        font-size:0.95rem;
+    }
+
+    #search{
+        width:100%;
+        padding:12px;
+        border-radius:14px;
+        font-size:0.95rem;
+    }
+
+    .stats{
+        flex-direction:column;
+        gap:12px;
+        padding:20px;
+        align-items:stretch;
+    }
+
+    .card{
+        width:100%;
+        min-width:auto;
+    }
+
+    .timeline{
+        padding:20px;
+    }
+
+    .evento-content{
+        padding:15px;
+    }
+
+    .evento-header{
+        font-size:1rem;
+        padding:12px;
+    }
+
+    .lugar{
+        font-size:1.1rem;
+    }
+
+    .badge{
+        font-size:0.8rem;
+        padding:5px 10px;
+    }
+
     .titulo-año{
         font-size:2rem;
+    }
+
+}
+
+@media(max-width:420px){
+
+    .hero h1{
+        font-size:1.5rem;
+    }
+
+    .titulo-año{
+        font-size:1.4rem;
+        padding-left:12px;
+    }
+
+    .hero p{
+        font-size:0.9rem;
+    }
+
+    #search{
+        padding:10px;
+        font-size:0.9rem;
+    }
+
+    .evento-header{
+        font-size:0.95rem;
     }
 
 }
