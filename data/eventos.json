@@ -1,0 +1,20 @@
+[
+  {
+    "fecha":"1991-07-27",
+    "lugar":"Bilbao",
+    "motivo":"Aste Nagusia",
+    "comparsas":[
+      "Ondalan",
+      "Txinbotarrak"
+    ]
+  },
+  {
+    "fecha":"1992-08-15",
+    "lugar":"Gernika",
+    "motivo":"Fiestas Patronales",
+    "comparsas":[
+      "Gernikako Erraldoiak",
+      "Ondalan"
+    ]
+  }
+]

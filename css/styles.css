@@ -1,0 +1,113 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#111827;
+    color:white;
+}
+
+.hero{
+    height:60vh;
+    background:
+    linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.6)),
+    url('../img/hero.jpg');
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.overlay{
+    text-align:center;
+}
+
+.hero h1{
+    font-size:4rem;
+    margin-bottom:10px;
+}
+
+.hero p{
+    font-size:1.2rem;
+    opacity:.8;
+}
+
+#search{
+    margin-top:20px;
+    width:400px;
+    max-width:90%;
+    padding:15px;
+    border:none;
+    border-radius:50px;
+    font-size:1rem;
+}
+
+.stats{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    padding:40px;
+}
+
+.card{
+    background:#1f2937;
+    padding:30px;
+    border-radius:20px;
+    min-width:220px;
+    text-align:center;
+}
+
+.timeline{
+    max-width:1200px;
+    margin:auto;
+    padding:40px;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(350px,1fr));
+    gap:25px;
+}
+
+.evento{
+    background:#1f2937;
+    border-radius:20px;
+    overflow:hidden;
+    transition:.3s;
+}
+
+.evento:hover{
+    transform:translateY(-8px);
+}
+
+.evento-content{
+    padding:25px;
+}
+
+.fecha{
+    color:#f59e0b;
+    font-weight:700;
+}
+
+.lugar{
+    font-size:1.4rem;
+    margin:10px 0;
+}
+
+.motivo{
+    color:#cbd5e1;
+}
+
+.comparsas{
+    margin-top:15px;
+}
+
+.badge{
+    display:inline-block;
+    padding:5px 10px;
+    background:#dc2626;
+    border-radius:20px;
+    margin:4px;
+    font-size:.8rem;
+}

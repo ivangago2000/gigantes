@@ -1,0 +1,1661 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Concentraciones de Gigantes en Bizkaia</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#0f172a;
+    color:white;
+}
+
+.hero{
+    min-height:50vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    background:
+    linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.8)),
+    url("https://s3.ppllstatics.com/elcorreo/www/multimedia/2023/08/09/gigantes-cabezudos-kTTE-U200968968227d4H-1200x840@El%20Correo.jpg");
+    background-size:cover;
+    background-position:center;
+}
+
+.hero-content{
+    padding:40px;
+}
+
+.hero h1{
+    font-size:3rem;
+    margin-bottom:15px;
+}
+
+.hero p{
+    font-size:1.2rem;
+    opacity:.8;
+}
+
+#search{
+    margin-top:25px;
+    width:500px;
+    max-width:90%;
+    padding:15px;
+    border:none;
+    border-radius:50px;
+    font-size:1rem;
+}
+
+.stats{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    padding:30px;
+    flex-wrap:wrap;
+}
+
+.card{
+    background:#1e293b;
+    padding:25px;
+    border-radius:15px;
+    min-width:220px;
+    text-align:center;
+}
+
+.card h2{
+    color:#f59e0b;
+}
+
+.timeline{
+    max-width:1400px;
+    margin:auto;
+    padding:40px;
+}
+
+/* TITULOS DE AÑO */
+
+.titulo-año{
+    font-size:3rem;
+    font-weight:700;
+    color:#fbbf24;
+    margin-top:60px;
+    margin-bottom:25px;
+    border-left:8px solid #dc2626;
+    padding-left:20px;
+}
+
+/* GRID DE EVENTOS POR AÑO */
+
+.eventos-año{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:25px;
+}
+
+.evento{
+    background:#1e293b;
+    border-radius:18px;
+    overflow:hidden;
+    transition:.3s;
+}
+
+.evento:hover{
+    transform:translateY(-8px);
+}
+
+.evento-header{
+    background:#dc2626;
+    padding:15px;
+    font-weight:bold;
+    font-size:1.1rem;
+}
+
+.evento-content{
+    padding:20px;
+}
+
+.fecha{
+    color:#fbbf24;
+    font-weight:700;
+    margin-bottom:10px;
+}
+
+.lugar{
+    font-size:1.3rem;
+    margin-bottom:10px;
+}
+
+.motivo{
+    color:#cbd5e1;
+}
+
+.comparsas{
+    margin-top:15px;
+}
+
+.badge{
+    display:inline-block;
+    background:#2563eb;
+    padding:6px 12px;
+    margin:4px;
+    border-radius:20px;
+    font-size:0.85rem;
+}
+
+footer{
+    text-align:center;
+    padding:40px;
+    opacity:.7;
+}
+
+@media(max-width:768px){
+
+    .hero h1{
+        font-size:2rem;
+    }
+
+    .titulo-año{
+        font-size:2rem;
+    }
+
+}
+
+</style>
+</head>
+<body>
+
+<header class="hero">
+    <div class="hero-content">
+        <h1>Concentraciones de Gigantes en Bizkaia</h1>
+        <p>Archivo histórico 1990 - 2026</p>
+
+        <input
+            type="text"
+            id="search"
+            placeholder="Buscar localidad, motivo o comparsa..."
+        >
+    </div>
+</header>
+
+<section class="stats">
+
+    <div class="card">
+        <h2 id="totalEventos">0</h2>
+        <p>Eventos registrados</p>
+    </div>
+
+    <div class="card">
+        <h2>1990 - 2026</h2>
+        <p>Periodo histórico</p>
+    </div>
+
+</section>
+
+<section id="eventos" class="timeline"></section>
+
+<footer>
+    Base de datos histórica de concentraciones de gigantes de Bizkaia
+</footer>
+
+<script>
+
+const eventos = [
+
+{
+    fecha:"26 agosto 1990",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao","Gau Txoriak (Erandio)", "Arrasateko Erraldoiak", "Puente La Reina", "Huarte", "Agurain", "Sukila (Kanbo)"]
+},
+
+{
+    fecha:"2 septiembre 1990",
+    lugar:"ERANDIO",
+    motivo:"Fiestas de San Agustín",
+    comparsas:["Gau Txoriak (Erandio)", "Agurain", "Etxarri Aranaz", "Olazagutia"]
+},
+
+{
+    fecha:"23 junio 1991",
+    lugar:"SESTAO",
+    motivo:"Fiestas de San Pedro",
+    comparsas:["Sestaoko Erraldoiak", "Comparsa de Bilbao", "Arrasateko Erraldoiak", "Sanguesa"]
+},
+
+{
+    fecha:"25 agosto 1991",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Gau Txoriak (Erandio)", "Arrasateko Erraldoiak", "Elizondo", "Agurain", "Otsagabia", "Sukila (Kanbo)", "Sanguesa"]
+},
+
+{
+    fecha:"1 septiembre 1991",
+    lugar:"ERANDIO",
+    motivo:"Fiestas de San Agustín",
+    comparsas:["Gau Txoriak (Erandio)", "Arrasateko Erraldoiak", "Sanguesa", "Comparsa de Bilbao"]
+},
+
+{
+    fecha:"23 agosto 1992",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Txantrea", "Sanguesa", "Aoiz", "Lumbier", "Elizondo", "Sukila (Kanbo)", "Estella"]
+},
+
+{
+    fecha:"30 agosto 1992",
+    lugar:"ERANDIO",
+    motivo:"Fiestas de San Agustín",
+    comparsas:["Gau Txoriak (Erandio)", "Sukila (Kanbo)", "Urretxuko Erraldoiak", "Estella"]
+},
+
+{
+    fecha:"22 agosto 1993",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Mairuek (Santutxu)", "Gau Txoriak (Erandio)", "Orduñako Erraldoiak", "Arrasateko Erraldoiak", "Sanguesa", "Tafallako Erraldoiak"]
+},
+
+{
+    fecha:"28 agosto 1993",
+    lugar:"ERANDIO",
+    motivo:"Fiestas de San Agustín",
+    comparsas:["Gau Txoriak (Erandio)", "Mairuek (Santutxu)", "Sanguesa"]
+},
+
+{
+    fecha:"28 agosto 1994",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Mairuek (Santutxu)", "Arrasateko Erraldoiak", "Sanguesa", "Sanduzelaiko Erraldoiak", "Sukila (Kanbo)", "Txantrea"]
+},
+
+{
+    fecha:"28 agosto 1994",
+    lugar:"ERANDIO",
+    motivo:"Fiestas de San Agustín",
+    comparsas:["Gau Txoriak (Erandio)", "Bidasoako Erraldoiak", "Deba", "Donibaneko Erraldoiak" ]
+},
+
+{
+    fecha:"16 octubre 1994",
+    lugar:"BASAURI",
+    motivo:"Fiestas de San Fausto",
+    comparsas:["Basauriko Erraldoiak", "Mairuek (Santutxu)", "Sanguesa"]
+},
+
+{
+    fecha:"27 agosto 1995",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Mairuek (Santutxu)", "Gau Txoriak (Erandio)", "Arrasateko Erraldoiak", "Sanguesa", "Artajona", "Sanduzelaiko Erraldoiak"]
+},
+
+{
+    fecha:"23 marzo 1996",
+    lugar:"DEUSTO",
+    motivo:"Fiestas de Deusto",
+    comparsas:["Ondalan (Deusto)", "Mairuek (Santutxu)", "Gau Txoriak (Erandio)", "Sukila (Kanbo)", "Sanguesa"]
+},
+
+{
+    fecha:"19 julio 1996",
+    lugar:"SANTURTZI",
+    motivo:"Fiestas de El Carmen",
+    comparsas:["Santurtziko Erraldoiak", "Ondalan (Deusto)", "Mairuek (Santutxu)"]
+},
+
+{
+    fecha:"15 agosto 1996",
+    lugar:"BILBAO",
+    motivo:"Konpartsero Eguna",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Mairuek (Santutxu)"]
+},
+
+{
+    fecha:"25 agosto 1996",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Mairuek (Santutxu)", "Arrasateko Erraldoiak", "Sanguesa", "Sanduzelaiko Erraldoaik", "Txantrea"]
+},
+
+{
+    fecha:"28 agosto 1996",
+    lugar:"ERANDIO",
+    motivo:"Fiestas de San Agustín",
+    comparsas:["Gau Txoriak (Erandio)", "Santurtziko Erraldoiak", "Ondalan (Deusto)", "Olazagutia"]
+},
+
+{
+    fecha:"17 julio 1997",
+    lugar:"SANTURTZI",
+    motivo:"Fiestas de El Carmen",
+    comparsas:["Santurtziko Erraldoiak", "Ondalan (Deusto)", "Mairuek (Santutxu)"]
+},
+
+{
+    fecha:"31 julio 1997",
+    lugar:"BILBAO",
+    motivo:"Konpartsero Eguna",
+    comparsas:["Mairuek (Santutxu)", "Ondalan (Deusto)", "Santurtziko Erraldoiak", "Amorebietako Erraldoiak", "Abarzuza"]
+},
+
+{
+    fecha:"24 agosto 1997",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Mairuek (Santutxu)", "Gau Txoriak (Erandio)", "Amorebietako Erraldoiak", "Markinako Erraldoiak", "Arrasateko Erraldoiak", "Sanguesa", "Sanduzelaiko Erraldoiak" ]
+},
+
+{
+    fecha:"16 julio 1998",
+    lugar:"SANTURTZI",
+    motivo:"Fiestas de El Carmen",
+    comparsas:["Santurtziko Erraldoiak", "Ondalan (Deusto)", "Laguntasuna (Barakaldo)"]
+},
+
+{
+    fecha:"31 julio 1998",
+    lugar:"BILBAO",
+    motivo:"Konpartsero Eguna",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Laguntasuna (Barakaldo)", "Gau Txoriak (Erandio)", "Markinako Erraldoiak", "Areatzako Erraldoiak", "Amorebietako Erraldoiak", "Santurtziko Erraldoiak"]
+},
+
+{
+    fecha:"28 agosto 1998",
+    lugar:"ERANDIO",
+    motivo:"Fiestas de San Agustín",
+    comparsas:["Gau Txoriak (Erandio)", "Comparsa de Bilbao", "Laguntasuna (Barakaldo)"]
+},
+
+{
+    fecha:"30 agosto 1998",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Mairuek (Santutxu)", "Gau Txoriak (Erandio)", "Laguntasuna (Barakaldo)", "Santurtziko Erraldoiak", "Sanguesa", "Arrasateko Erraldoiak", "Laguntza (Legutio)", "Sukila (Kanbo)"]
+},
+
+{
+    fecha:"11 octubre 1998",
+    lugar:"BARAKALDO",
+    motivo:"Presentación Gigantes de Laguntasuna",
+    comparsas:["Laguntasuna (Barakaldo)", "Ondalan (Deusto)", "Gau Txoriak (Erandio)", "Santurtziko Erraldoiak"]
+},
+
+{
+    fecha:"12 octubre 1998",
+    lugar:"BASAURI",
+    motivo:"Fiestas de San Fausto",
+    comparsas:["Basauriko Erraldoiak", "Ondalan (Deusto)", "Laguntasuna (Barakaldo)", "Santurtziko Erraldoiak"]
+},
+
+
+{
+    fecha:"17 julio 1999",
+    lugar:"BARAKALDO",
+    motivo:"Fiestas del Carmen",
+    comparsas:["Laguntasuna (Barakaldo)", "Ondalan (Deusto)", "Sanduzelaiko Erraldoiak"]
+},
+
+{
+    fecha:"18 julio 1999",
+    lugar:"AMOREBIETA",
+    motivo:"Fiestas del Carmen",
+    comparsas:["Amorebietako Erraldoiak", "Sukila (Kanbo)", "Laguntza (Legutio)", "Arrasateko Erraldoiak", "Huarteko Erraldoiak"]
+},
+
+{
+    fecha:"31 julio 1999",
+    lugar:"BILBAO",
+    motivo:"Konpartsero Eguna",
+    comparsas:["Mairuek (Santutxu)", "Gau Txoriak (Erandio)", "Laguntasuna (Barakaldo)"]
+},
+
+{
+    fecha:"28 agosto 1999",
+    lugar:"ERANDIO",
+    motivo:"Fiestas de San Agustín",
+    comparsas:["Gau Txoriak (Erandio)", "Irurtzun", "Barañain", "Burlada"]
+},
+
+{
+    fecha:"29 agosto 1999",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Mairuek (Santutxu)", "Laguntasuna (Barakaldo)", "Arrasateko Erraldoiak", "Sanguesa", "Sanduzelaiko Erraldoiak", "Laguntza (Legutio)", "Sukila (Kanbo)"]
+},
+
+{
+    fecha:"12 octubre 1999",
+    lugar:"BASAURI",
+    motivo:"Fiestas de San Fausto",
+    comparsas:["Basauriko Erraldoiak", "Ondalan (Deusto)", "Laguntasuna (Barakaldo)"]
+},
+
+{
+    fecha:"16 julio 2000",
+    lugar:"AMOREBIETA",
+    motivo:"Fiestas de El Carmen",
+    comparsas:["Amorebietako Erraldoiak", "Ondalan (Deusto)", "Laguntasuna (Barakaldo)", "Gau Txoriak (Erandio)", "Areatzako Erraldoiak"]
+},
+
+{
+    fecha:"27 agosto 2000",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Mairuek (Santutxu)", "Laguntasuna (Barakaldo)", "Sanduzelaiko Erraldoiak", "Sukila (Kanbo)", "Laguntza (Legutio)", "Txantrea", "Arrasateko Erraldoiak"]
+},
+
+{
+    fecha:"12 octubre 2000",
+    lugar:"BASAURI",
+    motivo:"Fiestas de San Fausto",
+    comparsas:["Ondalan (Deusto)", "Laguntasuna (Barakaldo)", "Santurtziko Erraldoiak"]
+},
+
+{
+    fecha:"24 marzo 2001",
+    lugar:"DEUSTO",
+    motivo:"Fiestas de Deusto",
+    comparsas:["Ondalan (Deusto)", "Laguntasuna (Barakaldo)", "Santurtziko Erraldoiak", "Laguntza (Legutio)", "Sukila (Kanbo)"]
+},
+
+{
+    fecha:"14 julio 2001",
+    lugar:"SANTURTZI",
+    motivo:"Fiestas de El Carmen",
+    comparsas:["Mendi Alde (Santurtzi)", "Ondalan (Deusto)", "Sanduzelaiko Erraldoiak", "Puebla de Sanabria"]
+},
+
+{
+    fecha:"15 julio 2001",
+    lugar:"AMOREBIETA",
+    motivo:"Fiestas de El Carmen",
+    comparsas:["Amorebietako Erraldoiak", "Ondalan (Deusto)", "Sukila (Kanbo)", "Caldederos"]
+},
+
+{
+    fecha:"18 agosto 2001",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Mairuek (Santutxu)", "Beti Jai Alai (Basurto)"]
+},
+
+{
+    fecha:"26 agosto 2001",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Mairuek (Santutxu)", "Laguntasuna (Barakaldo)", "Mendi Alde (Santurtzi)", "Laguntza (Legutio)", "Sanduzelaiko Erraldoiak", "Sukila (Kanbo)", "Arrasateko Erraldoiak"]
+},
+
+{
+    fecha:"12 octubre 2001",
+    lugar:"BASAURI",
+    motivo:"Fiestas de San Fausto",
+    comparsas:["Ondalan (Deusto)", "Laguntasuna (Barakaldo)", "Beti Jai Alai (Basurto)"]
+},
+
+{
+    fecha:"23 marzo 2002",
+    lugar:"DEUSTO",
+    motivo:"Fiestas de Deusto",
+    comparsas:["Ondalan (Deusto)", "Beti Jai Alai (Basurto)", "Mendi Alde (Santurtzi)", "Laguntza (Legutio)"]
+},
+
+{
+    fecha:"15 julio 2002",
+    lugar:"AMOREBIETA",
+    motivo:"Fiestas de El Carmen",
+    comparsas:["Amorebietako Erraldoiak", "Ondalan (Deusto)", "Beti Jai Alai (Basurto)", "Laguntza (Legutio)"]
+},
+
+
+
+{
+    fecha:"31 agosto 2002",
+    lugar:"ELORRIO",
+    motivo:"Ferixa Nausikoak",
+    comparsas:["Arrasateko Erraldoiak", "Aretxabaleta", "Eskoriatza"]
+},
+
+{
+    fecha:"24 agosto 2003",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Mairuek (Santutxu)", "Beti Jai Alai (Basurto)", "Laguntasuna (Barakaldo)", "Orduñako Erraldoiak", "Buñuel", "Sanduzelaiko Erraldoiak", "Sukila (Kanbo)"]
+},
+
+{
+    fecha:"7 septiembre 2003",
+    lugar:"ORDUÑA",
+    motivo:"Fiestas de la Coronación",
+    comparsas:["Orduñako Erraldoiak", "Laguntasuna (Barakaldo)", "Ondalan (Deusto)", "Amurrio"]
+},
+
+{
+    fecha:"14 septembre 2003",
+    lugar:"UGAO",
+    motivo:"Fiestas de Udurriaga",
+    comparsas:["Ugaoko Erraldoiak", "Ondalan (Deusto)", "Areatzako Erraldoiak", "Orduñako Erraldoiak"]
+},
+
+{
+    fecha:"12 octubre 2003",
+    lugar:"BASAURI",
+    motivo:"Fiestas de San Fausto",
+    comparsas:["Ondalan (Deusto)", "Beti Jai Alai (Basurto)", "Areatzako Erraldoiak"]
+},
+
+{
+    fecha:"22 agosto 2004",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Mairuek (Santutxu)", "Beti Jai Alai (Basurto)", "Areatzako Erraldoiak", "Bihotza (Orduña)", "Arrasateko Erraldoiak", "Sanduzelaiko Erraldoiak", "Casco Viejo Pamplona", "Sukila (Kanbo)"]
+},
+
+{
+    fecha:"5 septiembre 2004",
+    lugar:"ORDUÑA",
+    motivo:"Fiestas de la Coronación",
+    comparsas:["Bihotza (Orduña)", "Laguntasuna (Barakaldo)", "Mendi Alde (Santurtzi)", "Ondalan (Deusto)", "Amurrio", "Oiartzun"]
+},
+
+{
+    fecha:"12 octubre 2004",
+    lugar:"BASAURI",
+    motivo:"Fiestas de San Fausto",
+    comparsas:["Ondalan (Deusto)", "Beti Jai Alai (Basurto)", "Areatzako Erraldoiak"]
+},
+
+{
+    fecha:"30 abril 2005",
+    lugar:"SANTURTZI",
+    motivo:"Fiestas de San Jorge",
+    comparsas:["Mendi Alde (Santurtzi)", "Ondalan (Deusto)", "Laguntasuna (Barakaldo)", "Gau Txoriak (Erandio)", "Agurra (Getxo)", "Beti Jai Alai (Basurto)", "Bihotza (Orduña)", "Buñuel", "Allariz", "Solsona", "Calatayud", "Granollers"]
+},
+
+{
+    fecha:"15 julio 2005",
+    lugar:"AMOREBIETA",
+    motivo:"Fiestas de El Carmen",
+    comparsas:["Amorebietako Erraldoiak", "Bermeoko Erraldoiak", "Bihotza (Orduña)", "Mendi Alde Txiki (Santurtzi)"]
+},
+
+{
+    fecha:"28 agosto 2005",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Mairuek (Santutxu)", "Arrasateko Erraldoiak", "Sukila (Kanbo)", "Amurrio", "Buñuel", "Sanduzelaiko Erraldoiak", "Casco Viejo Pamplona"]
+},
+
+{
+    fecha:"4 septiembre 2005",
+    lugar:"ORDUÑA",
+    motivo:"Fiestas de la Coronación",
+    comparsas:["Bihotza (Orduña)", "Irrintzi (Donosti)", "Oiartzun", "Lezo", "Hospitalet de L'lobregat"]
+},
+
+{
+    fecha:"12 octubre 2005",
+    lugar:"BASAURI",
+    motivo:"Fiestas de San Fausto",
+    comparsas:["Ondalan (Deusto)", "Mendi Alde (Santurtzi)", "Beti Jai Alai (Basurto)"]
+},
+
+{
+    fecha:"1 abril 2006",
+    lugar:"DEUSTO-SAN IGNACIO",
+    motivo:"10º Aniversario Ondalan Konpartsa",
+    comparsas:["Ondalan (Deusto)", "Beti Jai Alai (Basurto)", "Gau Txoriak (Erandio)", "Laguntasuna (Barakaldo)", "Mendi Alde (Santurtzi)", "Bermeoko Erraldoiak", "Bihotza (Orduña)", "Areatzako Erraldoiak", "Arrasateko Erraldoiak", "Sukila (Kanbo)", "Sanduzelaiko Erraldoiak", "Amurrio", "Laguntza (Legutio)"]
+},
+
+{
+    fecha:"15 julio 2006",
+    lugar:"AMOREBIETA",
+    motivo:"Fiestas de El Carmen",
+    comparsas:["Amorebietako Erraldoiak", "Beti Jai Alai (Basurto)", "Bihotza (Orduña)"]
+},
+
+{
+    fecha:"27 agosto 2006",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Mairuek (Santutxu)", "Bermeoko Erraldoiak", "Amurrio", "Irrintzi (Donosti)", "Arrasateko Erraldoiak", "Sanduzelaiko Erraldoiak", "Sukila (Kanbo)", "Tauste", "Perrinche (Tudela)"]
+},
+
+{
+    fecha:"3 septiembre 2006",
+    lugar:"ORDUÑA",
+    motivo:"Fiestas de la Coronación",
+    comparsas:["Bihotza (Orduña)", "Laguntasuna (Barakaldo)", "Amurrio", "Lezo", "Esparreguera"]
+},
+
+{
+    fecha:"12 octubre 2006",
+    lugar:"BASAURI",
+    motivo:"Fiestas de San Fausto",
+    comparsas:["Ondalan (Deusto)", "Beti Jai Alai (Basurto)", "Mendi Alde (Santurtzi)"]
+},
+
+{
+    fecha:"12 octubre 2006",
+    lugar:"BASAURI",
+    motivo:"Fiestas de San Fausto",
+    comparsas:["Ondalan (Deusto)", "Beti Jai Alai (Basurto)", "Mendi Alde (Santurtzi)"]
+},
+
+{
+    fecha:"14 abril 2007",
+    lugar:"BILBAO",
+    motivo:"Erraldoiketa",
+    comparsas:["Ondalan (Deusto)", "Beti Jai Alai (Basurto)", "Bihotza (Orduña)", "Bermeoko Erraldoiak", "Agurra (Getxo)"]
+},
+
+{
+    fecha:"2 junio 2007",
+    lugar:"BERMEO",
+    motivo:"Bizkaiko Erraldoien Eguna",
+    comparsas:["Bermeoko Erraldoiak", "Ondalan (Deusto)", "Beti Jai Alai (Basurto)", "Agurra (Getxo)", "Bihotza (Orduña)"]
+},
+
+{
+    fecha:"22 julio 2007",
+    lugar:"BARAKALDO",
+    motivo:"Fiestas de El Carmen",
+    comparsas:["Laguntasuna (Barakaldo)", "Bihotza (Orduña)", "Sukila (Kanbo)"]
+},
+
+{
+    fecha:"29 julio 2007",
+    lugar:"GETXO",
+    motivo:"Fiestas de Algorta",
+    comparsas:["Agurra (Getxo)", "Ondalan (Deusto)", "Bermeoko Erraldoiak"]
+},
+
+{
+    fecha:"26 agosto 2007",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Mairuek (Santutxu)", "Bermeoko Erraldoiak", "Agurra (Getxo)", "Irrintzi (Donosti)", "Amurrio", "Tauste", "Sanduzelaiko Erraldoiak", "Arrasateko Erraldoiak"]
+},
+
+{
+    fecha:"2 marzo 2008",
+    lugar:"BASURTO",
+    motivo:"40º Aniversario Beti Jai Alai Dantza Taldea",
+    comparsas:["Beti Jai Alai (Basurto)", "Ondalan (Deusto)", "Agurra (Getxo)", "Mendi Alde (Santurtzi)"]
+},
+
+{
+    fecha:"12 abril 2008",
+    lugar:"BILBAO",
+    motivo:"Erraldoiketa",
+    comparsas:["Ondalan (Deusto)", "Beti Jai Alai (Basurto)", "Mendi Alde (Santurtzi)"]
+},
+
+{
+    fecha:"7 junio 2008",
+    lugar:"GETXO",
+    motivo:"Bizkaiko Erraldoien Eguna",
+    comparsas:["Agurra (Getxo)", "Ondalan (Deusto)", "Beti Jai Alai (Basurto)", "Bermeoko Erraldoiak", "Mendi Alde (Santurtzi)"]
+},
+
+{
+    fecha:"20 julio 2008",
+    lugar:"BARAKALDO",
+    motivo:"Fiestas de El Carmen",
+    comparsas:["Laguntasuna (Barakaldo)", "Bihotza (Orduña)", "Ondalan (Deusto)", "Oiartzun", "Berriozar"]
+},
+
+{
+    fecha:"24 agosto 2008",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Mairuek (Santutxu)", "Bermeoko Erraldoiak", "Amurrio", "Irrintzi (Donosti)", "Sanduzelaiko Erraldoiak", "Txantrea", "Perrinche (Tudela)"]
+},
+
+{
+    fecha:"18 abril 2009",
+    lugar:"BILBAO",
+    motivo:"Erraldoiketa",
+    comparsas:["Ondalan (Deusto)", "Beti Jai Alai (Basurto)", "Agurra (Getxo)", "Bermeoko Erraldoiak"]
+},
+
+{
+    fecha:"26 abril 2009",
+    lugar:"ORDUÑA",
+    motivo:"Homenaje a Pantaleón Aginaga",
+    comparsas:["Bihotza (Orduña)", "Amurrio", "Amorebietako Erraldoiak", "Laguntasuna (Barakaldo)", "Ondalan (Deusto)"]
+},
+
+{
+    fecha:"30 mayo 2009",
+    lugar:"SAN IGNACIO",
+    motivo:"Fiestas de Ibarrekolanda",
+    comparsas:["Ondalan Txiki (Deusto)", "Mendi Alde Txiki (Santurtzi)", "Txantrea Txiki", "Arrasate Txiki"]
+},
+
+{
+    fecha:"6 junio 2009",
+    lugar:"BALMASEDA",
+    motivo:"Bizkaiko Erraldoien Eguna",
+    comparsas:["Ondalan (Deusto)", "Beti Jai Alai (Basurto)", "Bermeoko Erraldoiak", "Agurra (Getxo)", "Mendi Alde (Santurtzi)", "Bihotza (Orduña)", "Irrintzi (Donosti)", "Añorga", "Sanduzelaiko Erraldoiak", "Bidasoako Erraldoiak"]
+},
+
+{
+    fecha:"15 julio 2009",
+    lugar:"AMOREBIETA",
+    motivo:"Fiestas de El Carmen",
+    comparsas:["Amorebietako Erraldoiak", "Ondalan Txiki (Deusto)", "Txantrea Txiki", "Arrasate Txiki"]
+},
+
+{
+    fecha:"19 julio 2009",
+    lugar:"BARAKALDO",
+    motivo:"Fiestas de El Carmen",
+    comparsas:["Laguntasuna (Barakaldo)", "Bihotza (Orduña)", "Birakari (Sestao)", "Aoiz", "Sukila (Kanbo)"]
+},
+
+{
+    fecha:"23 agosto 2009",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Mairuek (Santutxu)", "Bihotza (Orduña)", "Añorga", "Irrintzi (Donosti)", "Sukila (Kanbo)", "Noain", "Txantrea", "Tauste"]
+},
+
+{
+    fecha:"29 mayo 2010",
+    lugar:"BILBAO",
+    motivo:"Fiestas de Ibarrekolanda",
+    comparsas:["Ondalan Txiki (Deusto)", "Mendi Alde Txiki (Santurtzi)", "Arrasate Txiki"]
+},
+
+{
+    fecha:"5 junio 2010",
+    lugar:"BASURTO",
+    motivo:"Bizkaiko Erraldoien Eguna",
+    comparsas:["Beti Jai Alai (Basurto)", "Ondalan (Deusto)", "Agurra (Getxo)", "Mendi Alde (Santurtzi)"]
+},
+
+{
+    fecha:"15 julio 2010",
+    lugar:"AMOREBIETA",
+    motivo:"Fiestas de El Carmen",
+    comparsas:["Amorebietako Erraldoiak", "Mendi Alde Txiki (Santurtzi)", "Arrasate Txiki"]
+},
+
+{
+    fecha:"18 julio 2010",
+    lugar:"BARAKALDO",
+    motivo:"Fiestas de El Carmen",
+    comparsas:["Laguntasuna (Barakaldo)", "Ondalan (Deusto)", "Mairuek (Santutxu)", "Portugaleteko Erraldoiak", "Agurra (Getxo)", "Amurrio"]
+},
+
+{
+    fecha:"29 agosto 2010",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Mairuek (Santutxu)", "Bermeoko Erraldoiak", "Irrintzi (Donosti)", "Sukila (Kanbo)", "Perrinche (Tudela)", "Sanguesa"]
+},
+
+{
+    fecha:"26 marzo 2011",
+    lugar:"DEUSTO",
+    motivo:"Fiestas de Deusto",
+    comparsas:["Ondalan (Deusto)", "Beti Jai Alai (Basurto)", "Irrintzi (Donosti)"]
+},
+
+{
+    fecha:"4 junio 2011",
+    lugar:"DEUSTO",
+    motivo:"Bizkaiko Erraldoien Eguna",
+    comparsas:["Ondalan (Deusto)", "Beti Jai Alai (Basurto)", "Bermeoko Erraldoiak"]
+},
+
+{
+    fecha:"5 junio 2011",
+    lugar:"ORDUÑA",
+    motivo:"10º Aniversario Bihotza Konpartsa",
+    comparsas:["Bihotza (Orduña)", "Amurrio", "Ondalan (Deusto)", "Llodio", "Laguntasuna (Barakaldo)", "Irrintzi (Donosti)", "Mataró"]
+},
+
+{
+    fecha:"16 julio 2011",
+    lugar:"BARAKALDO",
+    motivo:"Fiestas de El Carmen",
+    comparsas:["Laguntasuna (Barakaldo)", "Agurra (Getxo)", "Mairuek (Santutxu)", "Bihotza (Orduña)", "Sukila (Kanbo)"]
+},
+
+{
+    fecha:"31 julio 2011",
+    lugar:"GETXO",
+    motivo:"Fiestas de Algorta",
+    comparsas:["Agurra (Getxo)", "Laguntasuna (Barakaldo)", "Mairuek (Santutxu)"]
+},
+
+{
+    fecha:"28 agosto 2011",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Agurra (Getxo)", "Mairuek (Santutxu)", "Bermeoko Erraldoiak", "Irrintzi (Donosti)", "Sukila (Kanbo)", "Sanduzelaiko Erraldoiak"]
+},
+
+
+{
+    fecha:"27 junio 2012",
+    lugar:"SESTAO",
+    motivo:"Fiestas de San Pedro",
+    comparsas:["Birakari (Sestao)", "Mendi Alde (Santurtzi)", "Laguntasuna (Barakaldo)", "Agurra (Getxo)", "Amorebietako Erraldoiak"]
+},
+
+
+{
+    fecha:"15 julio 2012",
+    lugar:"AMOREBIETA",
+    motivo:"Fiestas de El Carmen",
+    comparsas:["Amorebietako Erraldoiak", "Bermeoko Erraldoiak", "Ondalan (Deusto)"]
+},
+
+{
+    fecha:"22 julio 2012",
+    lugar:"BARAKALDO",
+    motivo:"Fiestas de El Carmen",
+    comparsas:["Laguntasuna (Barakaldo)", "Agurra (Getxo)", "Birakari (Sestao)", "Amurrio"]
+},
+
+{
+    fecha:"31 julio 2012",
+    lugar:"GETXO",
+    motivo:"Fiestas de Algorta",
+    comparsas:["Agurra (Getxo)", "Laguntasuna (Barakaldo)", "Mairuek (Santutxu)"]
+},
+
+{
+    fecha:"26 agosto 2012",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Mairuek (Santutxu)", "Bermeoko Erraldoiak", "Irrintzi (Donosti)", "Sukila (Kanbo)", "Elizondo", "Sanguesa"]
+},
+
+{
+    fecha:"15 julio 2013",
+    lugar:"AMOREBIETA",
+    motivo:"Fiestas de El Carmen",
+    comparsas:["Amorebietako Erraldoiak", "Buztintxuri", "Lasarte"]
+},
+
+{
+    fecha:"21 julio 2013",
+    lugar:"BARAKALDO",
+    motivo:"Fiestas de El Carmen",
+    comparsas:["Laguntasuna (Barakaldo)", "Bihotza (Orduña)", "Amurrio", "Danetarako (Trapagaran)", "Sukila (Kanbo)", "Agurra (Getxo)"]
+},
+
+{
+    fecha:"31 julio 2013",
+    lugar:"GETXO",
+    motivo:"Fiestas de Algorta",
+    comparsas:["Agurra (Getxo)", "Laguntasuna (Barakaldo)", "Danetarako (Trapagaran)"]
+},
+
+{
+    fecha:"25 agosto 2013",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Mairuek (Santutxu)", "Bermeoko Erraldoiak", "Irrintzi (Donosti)", "Bergara", "Sukila (Kanbo)", "Sanduzelaiko Erraldoiak"]
+},
+
+{
+    fecha:"30 agosto 2013",
+    lugar:"TRAPAGARAN",
+    motivo:"Fiestas de San Ramón",
+    comparsas:["Danetarako (Trapagaran)", "Laguntasuna (Barakaldo)", "Birakari (Sestao)", "Bihotza (Orduña)", "Amurrio"]
+},
+
+{
+    fecha:"17 mayo 2014",
+    lugar:"AREATZA",
+    motivo:"Fiestas del Karpo",
+    comparsas:["Areatzako Erraldoiak", "Birakari (Sestao)", "Ondalan (Deusto)"]
+},
+
+{
+    fecha:"20 julio 2014",
+    lugar:"BARAKALDO",
+    motivo:"Fiestas de El Carmen",
+    comparsas:["Laguntasuna (Barakaldo)", "Danetarako (Trapagaran)", "Bihotza (Orduña)", "Amurrio", "Agurra (Getxo)"]
+},
+
+{
+    fecha:"31 julio 2014",
+    lugar:"GETXO",
+    motivo:"Fiestas de Algorta",
+    comparsas:["Agurra (Getxo)", "Laguntasuna (Barakaldo)", "Danetarako (Trapagaran)"]
+},
+
+{
+    fecha:"24 agosto 2014",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Mairuek (Santutxu)", "Sukila (Kanbo)", "Sanduzelaiko Erraldoiak", "Irrintzi (Donosti)", "Bergara", "Arrasateko Erraldoiak"]
+},
+
+{
+    fecha:"29 agosto 2014",
+    lugar:"TRAPAGARAN",
+    motivo:"Fiestas de San Ramón",
+    comparsas:["Danetarako (Trapagaran)", "Laguntasuna (Barakaldo)", "Agurra (Getxo)", "Legazpi"]
+},
+
+{
+    fecha:"9 mayo 2015",
+    lugar:"AREATZA",
+    motivo:"Fiestas del Karpo",
+    comparsas:["Areatzako Erraldoiak", "Birakari (Sestao)", "Amorebietako Erraldoiak", "Ordizia"]
+},
+
+{
+    fecha:"25 junio 2015",
+    lugar:"SESTAO",
+    motivo:"Fiestas de San Pedro",
+    comparsas:["Birakari (Sestao)", "Laguntasuna (Barakaldo)", "Danetarako (Trapagaran)", "Legazpi"]
+},
+
+{
+    fecha:"19 julio 2015",
+    lugar:"BARAKALDO",
+    motivo:"Fiestas de El Carmen",
+    comparsas:["Laguntasuna (Barakaldo)", "Agurra (Getxo)", "Birakari (Sestao)", "Danetarako (Trapagaran)"]
+},
+
+{
+    fecha:"31 julio 2015",
+    lugar:"GETXO",
+    motivo:"Fiestas de Algorta",
+    comparsas:["Agurra (Getxo)", "Laguntasuna (Barakaldo)", "Danetarako (Trapagaran)"]
+},
+
+{
+    fecha:"26 agosto 2015",
+    lugar:"AREATZA",
+    motivo:"Fiestas de San Agustín",
+    comparsas:["Areatzako Erraldoiak", "Ondalan (Deusto)", "Danetarako (Trapagaran)"]
+},
+
+{
+    fecha:"30 agosto 2015",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Mairuek (Santutxu)", "Bermeoko Erraldoiak", "Irrintzi (Donosti)", "Arrasateko Erraldoiak", "Sukila (Kanbo)", "Sanduzelaiko Erraldoiak"]
+},
+
+{
+    fecha:"5 septiembre 2015",
+    lugar:"TRAPAGARAN",
+    motivo:"Fiestas de San Ramón",
+    comparsas:["Danetarako (Trapagaran)", "Agurra (Getxo)", "Laguntasuna (Barakaldo)", "Birakari (Sestao)", "Gartxot (Azpilañaga)", "Berriozar", "Legazpi", "Ordizia"]
+},
+
+{
+    fecha:"10 octubre 2015",
+    lugar:"GALLARTA",
+    motivo:"Sagardo Eguna",
+    comparsas:["Polunpak (Ortuella)", "Bihotza (Orduña)", "Amurrio", "Legazpi"]
+},
+
+{
+    fecha:"7 mayo 2016",
+    lugar:"AREATZA",
+    motivo:"Fiestas del Karpo",
+    comparsas:["Areatzako Erraldoiak", "Amorebietako Erraldoiak", "Birakari (Sestao)"]
+},
+
+{
+    fecha:"4 junio 2016",
+    lugar:"DEUSTO",
+    motivo:"20º Aniversario Ondalan Konpartsa",
+    comparsas:["Ondalan (Deusto)", "Beti Jai Alai (Basurto)", "Bermeoko Erraldoiak", "Agurra (Getxo)", "Mendi Alde (Santurtzi)", "Areatzako Erraldoiak", "Irrintzi (Donosti)", "Arrasateko Erraldoiak", "Sukila (Kanbo)", "Txantrea", "Sanduzelaiko Erraldoiak"]
+},
+
+{
+    fecha:"15 julio 2016",
+    lugar:"AMOREBIETA",
+    motivo:"Fiestas del Carmen",
+    comparsas:["Amorebietako Erraldoiak", "Danetarako (Trapagaran)", "Birakari (Sestao)", "Bergara"]
+},
+
+{
+    fecha:"17 julio 2016",
+    lugar:"BARAKALDO",
+    motivo:"Fiestas del Carmen",
+    comparsas:["Laguntasuna (Barakaldo)", "Agurra (Getxo)", "Bihotza (Orduña)", "Danetarako (Trapagaran)"]
+},
+
+{
+    fecha:"31 julio 2016",
+    lugar:"GETXO",
+    motivo:"Fiestas de Algorta",
+    comparsas:["Agurra (Getxo)", "Laguntasuna (Barakaldo)","Danetarako (Trapagaran)", "Ondalan (Deusto)"]
+},
+
+{
+    fecha:"28 agosto 2016",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Bermeoko Erraldoiak", "Irrintzi (Donosti)", "Sukila (Kanbo)", "Txantrea", "Sanduzelaiko Erraldoiak"]
+},
+
+{
+    fecha:"3 septiembre 2016",
+    lugar:"TRAPAGARAN",
+    motivo:"Fiestas de San Ramón",
+    comparsas:["Danetarako (Trapagaran)", "Agurra (Getxo)", "Laguntasuna (Barakaldo)", "Birakari (Sestao)", "Amorebietako Erraldoiak", "Legazpi", "Añorga", "Bergara", "Usurbil", "Renteria", "Gartxot (Azpilañaga)"]
+},
+
+{
+    fecha:"3 septiembre 2016",
+    lugar:"BERMEO",
+    motivo:"10º Aniversario Bermeoko Konpartsa",
+    comparsas:["Bermeoko Erraldoiak", "Ondalan (Deusto)", "Mendi Alde (Santurtzi)", "Irrintzi (Donosti)", "Sanduzelaiko Erraldoiak"]
+},
+
+{
+    fecha:"4 septiembre 2016",
+    lugar:"ORDUÑA",
+    motivo:"Fiestas de la Coronación",
+    comparsas:["Bihotza (Orduña)", "Polunpak (Ortuella)", "Ordizia"]
+},
+
+{
+    fecha:"6 mayo 2017",
+    lugar:"AREATZA",
+    motivo:"Fiestas del Karpo",
+    comparsas:["Birakari (Sestao)", "Amorebietako Erraldoiak", "Ondalan (Deusto)"]
+},
+
+{
+    fecha:"15 julio 2017",
+    lugar:"AMOREBIETA",
+    motivo:"Fiestas del Carmen",
+    comparsas:["Amorebietako Erraldoiak", "Sukila (Kanbo)", "Sanduzelaiko Erraldoiak"]
+},
+
+{
+    fecha:"23 julio 2017",
+    lugar:"BARAKALDO",
+    motivo:"Fiestas del Carmen",
+    comparsas:["Laguntasuna (Barakaldo)", "Danetarako (Trapagaran)", "Birakari (Sestao)", "Legazpi"]
+},
+
+{
+    fecha:"31 julio 2017",
+    lugar:"GETXO",
+    motivo:"Fiestas de Algorta",
+    comparsas:["Agurra (Getxo)", "Ondalan (Deusto)", "Danetarako (Trapagaran)"]
+},
+
+{
+    fecha:"27 agosto 2017",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Mairuek (Santutxu)", "Arrasateko Erraldoiak", "Irrintzi (Donosti)", "Sukila (Kanbo)", "Sanduzelaiko Erraldoiak"]
+},
+
+{
+    fecha:"2 septiembre 2017",
+    lugar:"TRAPAGARAN",
+    motivo:"Fiestas de San Ramón",
+    comparsas:["Danetarako (Trapagaran)", "Agurra (Getxo)", "Laguntasuna (Barakaldo)", "Ondalan (Deusto)", "Birakari (Sestao)", "Legazpi", "Sukila (Kanbo)"]
+},
+
+{
+    fecha:"3 septiembre 2017",
+    lugar:"ORDUÑA",
+    motivo:"Fiestas de la Coronación",
+    comparsas:["Bihotza (Orduña)", "Polunpak (Ortuella)", "Amurrio", "Bergara"]
+},
+
+{
+    fecha:"7 octubre 2017",
+    lugar:"ONDARROA",
+    motivo:"Festival Marabili Sormen",
+    comparsas:["Ondarroa", "Mutriku", "Bergara", "Urretxu"]
+},
+
+{
+    fecha:"14 octubre 2017",
+    lugar:"GALLARTA",
+    motivo:"Sagardo Eguna",
+    comparsas:["Polunpak (Ortuella)", "Bihotza (Orduña)", "Vacarisses"]
+},
+
+{
+    fecha:"16 junio 2018",
+    lugar:"SANTUTXU",
+    motivo:"Santutxu Kolorea",
+    comparsas:["Mairuek (Santutxu)", "Laguntasuna (Barakaldo)", "Gau Txoriak (Erandio)", "Buztintxuri"]
+},
+
+{
+    fecha:"30 junio 2018",
+    lugar:"SESTAO",
+    motivo:"Fiestas de San Pedro",
+    comparsas:["Birakari (Sestao)", "Laguntasuna (Barakaldo)", "Beti Jai Alai (Basurto)", "Danetarako (Trapagaran)"]
+},
+
+{
+    fecha:"15 julio 2018",
+    lugar:"AMOREBIETA",
+    motivo:"Fiestas del Carmen",
+    comparsas:["Amorebietako Erraldoiak", "Mairuek (Santutxu)", "Bermeoko Erraldoiak"]
+},
+
+{
+    fecha:"22 julio 2018",
+    lugar:"BARAKALDO",
+    motivo:"Fiestas del Carmen",
+    comparsas:["Laguntasuna (Barakaldo)", "Danetarako (Trapagaran)", "Mairuek (Santutxu)", "Birakari (Sestao)", "Sukila (Kanbo)", "Legazpi"]
+},
+
+{
+    fecha:"4 agosto 2018",
+    lugar:"GERNIKA",
+    motivo:"Gargantua",
+    comparsas:["Gernikako Erraldoiak", "Ondalan (Deusto)", "Bergara"]
+},
+
+{
+    fecha:"26 agosto 2018",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Mairuek (Santutxu)", "Irrintzi (Donosti)", "Sukila (Kanbo)", "Sanduzelaiko Erraldoiak"]
+},
+
+{
+    fecha:"1 septiembre 2018",
+    lugar:"TRAPAGARAN",
+    motivo:"Fiestas de San Ramón",
+    comparsas:["Danetarako (Trapagaran)", "Laguntasuna (Barakaldo)", "Agurra (Getxo)", "Birakari (Sestao)"]
+},
+
+{
+    fecha:"15 septiembre 2018",
+    lugar:"BASURTO",
+    motivo:"50º Aniversario Beti Jai Alai",
+    comparsas:["Beti Jai Alai (Basurto)", "Ondalan (Deusto)", "Areatzako Erraldoiak", "Birakari (Sestao)"]
+},
+
+{
+    fecha:"23 junio 2019",
+    lugar:"SANTUTXU",
+    motivo:"Santutxu Kolorea",
+    comparsas:["Mairuek (Santutxu)", "Birakari (Sestao)", "Kietb (Bermeo)"]
+},
+
+{
+    fecha:"15 julio 2019",
+    lugar:"AMOREBIETA",
+    motivo:"Fiestas del Carmen",
+    comparsas:["Amorebietako Erraldoiak", "Kietb (Bermeo)", "Ondalan (Deusto)"]
+},
+
+{
+    fecha:"21 julio 2019",
+    lugar:"BARAKALDO",
+    motivo:"Fiestas del Carmen",
+    comparsas:["Laguntasuna (Barakaldo)", "Agurra (Getxo)", "Bihotza (Orduña)", "Amurrio", "Danetarako (Trapagaran)", "Sukila (Kanbo)"]
+},
+
+{
+    fecha:"31 julio 2019",
+    lugar:"GETXO",
+    motivo:"Fiestas de Algorta",
+    comparsas:["Agurra (Getxo)", "Laguntasuna (Barakaldo)", "Ostargi (Hernani)"]
+},
+
+{
+    fecha:"25 agosto 2019",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Mairuek (Santutxu)", "Beti Jai Alai (Basurto)", "Bergara"]
+},
+
+{
+    fecha:"5 octubre 2019",
+    lugar:"GALLARTA",
+    motivo:"Sagardo Eguna",
+    comparsas:["Polunpak (Ortuella)", "Bihotza (Orduña)", "Baztan", "Lesaka"]
+},
+
+{
+    fecha:"5 octubre 2019",
+    lugar:"ONDARROA",
+    motivo:"Festival Marabili Sormen",
+    comparsas:["Bergara", "Urretxu", "Elgoibar", "Mutriku"]
+},
+
+{
+    fecha:"5 junio 2022",
+    lugar:"SANTUTXU",
+    motivo:"Santutxu Kolorea",
+    comparsas:["Mairuek (Santutxu)", "Arai (Vitoria)", "Kietb (Bermeo)"]
+},
+
+{
+    fecha:"15 julio 2022",
+    lugar:"AMOREBIETA",
+    motivo:"Fiestas del Carmen",
+    comparsas:["Amorebietako Erraldoiak", "Ondalan (Deusto)", "Kietb (Bermeo)"]
+},
+
+{
+    fecha:"17 julio 2022",
+    lugar:"BARAKALDO",
+    motivo:"Fiestas del Carmen",
+    comparsas:["Laguntasuna (Barakaldo)", "Barakaldoko Erraldoiak", "Danetarako (Trapagaran)", "Agurra (Getxo)", "Sukila (Kanbo)"]
+},
+
+{
+    fecha:"31 julio 2022",
+    lugar:"GETXO",
+    motivo:"Fiestas de Algorta",
+    comparsas:["Agurra (Getxo)", "Laguntasuna (Barakaldo)", "Buztintxuri"]
+},
+
+{
+    fecha:"28 agosto 2022",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Mairuek (Santutxu)", "Arrasateko Erraldoiak", "Bergara", "Sukila (Kanbo)", "Sanduzelaiko Erraldoiak"]
+},
+
+{
+    fecha:"3 septiembre 2022",
+    lugar:"TRAPAGARAN",
+    motivo:"Fiestas de San Ramón",
+    comparsas:["Danetarako (Trapagaran)", "Laguntasuna (Barakaldo)", "Birakari (Sestao)"]
+},
+
+{
+    fecha:"2 abril 2023",
+    lugar:"UGAO",
+    motivo:"Euskal Jaia",
+    comparsas:["Ugaoko Erraldoiak", "Ondalan (Deusto)", "Bihotza (Orduña)", "Amurrio"]
+},
+
+{
+    fecha:"7 mayo 2023",
+    lugar:"BERRIATUA",
+    motivo:"Fiestas de San Gregorio",
+    comparsas:["Markinako Erraldoiak", "Renteria", "Villademat"]
+},
+
+{
+    fecha:"11 junio 2023",
+    lugar:"SANTUTXU",
+    motivo:"Santutxu Kolorea",
+    comparsas:["Mairuek (Santutxu)", "Kietb (Bermeo)", "Ekaitz (Beasain)", "Donibaneko Erraldoiak"]
+},
+
+{
+    fecha:"15 julio 2023",
+    lugar:"AMOREBIETA",
+    motivo:"Fiestas del Carmen",
+    comparsas:["Amorebietako Erraldoiak", "Kietb (Bermeo)", "Txantrea", "Bergara"]
+},
+
+{
+    fecha:"23 julio 2023",
+    lugar:"BARAKALDO",
+    motivo:"Fiestas del Carmen",
+    comparsas:["Laguntasuna (Barakaldo)", "Barakaldoko Erraldoiak", "Bihotza (Orduña)", "Ondalan (Deusto)", "Danetarako (Trapagaran)", "Agurra (Getxo)"]
+},
+
+{
+    fecha:"31 julio 2023",
+    lugar:"GETXO",
+    motivo:"Fiestas de Algorta",
+    comparsas:["Agurra (Getxo)", "Laguntasuna (Barakaldo)", "Mairuek (Santutxu)", "Birakari (Sestao)"]
+},
+
+{
+    fecha:"28 agosto 2023",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Mairuek (Santutxu)", "Bermeoko Erraldoiak", "Bergara", "Loretope (Donosti)", "Sukila (Kanbo)"]
+},
+
+{
+    fecha:"10 septiembre 2023",
+    lugar:"BERMEO",
+    motivo:"Erraldoi Txikien Bilkura",
+    comparsas:["Kietb (Bermeo)", "Bergara Txiki", "Pamplona Txiki", "Gartxot Txiki (Azpilañaga)"]
+},
+
+{
+    fecha:"10 noviembre 2023",
+    lugar:"PORTUGALETE",
+    motivo:"Erraldoi Eguna",
+    comparsas:["Zubira (Portugalete)", "Birakari (Sestao)", "Mendi Alde (Santurtzi)"]
+},
+
+{
+    fecha:"5 mayo 2024",
+    lugar:"ORDUÑA",
+    motivo:"Fiestas de Ochomayo",
+    comparsas:["Bihotza (Orduña)", "Ondalan (Deusto)", "Polunpak (Ortuella)"]
+},
+
+{
+    fecha:"8 junio 2024",
+    lugar:"BERMEO",
+    motivo:"Oinatz Erraldoiak",
+    comparsas:["Bermeoko Erraldoiak", "Ondalan (Deusto)", "Irrintzi (Donosti)", "Sukila (Kanbo)"]
+},
+
+{
+    fecha:"9 junio 2024",
+    lugar:"SANTUTXU",
+    motivo:"Santutxu Kolorea",
+    comparsas:["Mairuek (Santutxu)", "Kietb (Bermeo)", "Arai (Vitoria)", "Lazkao", "Asier Marco (Tafalla)"]
+},
+
+{
+    fecha:"15 julio 2024",
+    lugar:"AMOREBIETA",
+    motivo:"Fiestas del Carmen",
+    comparsas:["Amorebietako Erraldoiak", "Ondalan (Deusto)", "Txantrea", "Bergara"]
+},
+
+{
+    fecha:"21 julio 2024",
+    lugar:"BARAKALDO",
+    motivo:"Fiestas del Carmen",
+    comparsas:["Laguntasuna (Barakaldo)", "Barakaldoko Erraldoiak", "Danetarako (Trapagaran)", "Ondalan (Deusto)", "Agurra (Getxo)", "Bihotza (Orduña)"]
+},
+
+{
+    fecha:"31 julio 2024",
+    lugar:"GETXO",
+    motivo:"Fiestas de Algorta",
+    comparsas:["Agurra (Getxo)", "Laguntasuna (Barakaldo)", "Ekaitz (Beasain)"]
+},
+
+{
+    fecha:"25 agosto 2024",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Mairuek (Santutxu)", "Bermeoko Erraldoiak", "Irrintzi (Donosti)", "Arrasateko Erraldoiak", "Sukila (Kanbo)", "Sanduzelaiko Erraldoiak"]
+},
+
+{
+    fecha:"31 agosto 2024",
+    lugar:"TRAPAGARAN",
+    motivo:"Fiestas de San Ramón",
+    comparsas:["Danetarako (Trapagaran)", "Laguntasuna (Barakaldo)", "Kietb (Bermeo)", "Ordizia"]
+},
+
+{
+    fecha:"15 septiembre 2024",
+    lugar:"BERMEO",
+    motivo:"Erraldoi Txikien Bilkura",
+    comparsas:["Kietb (Bermeo)", "Trapagaran Txiki", "Iturri Plaza", "Oronoz Txiki"]
+},
+
+{
+    fecha:"5 octubre 2024",
+    lugar:"MARKINA",
+    motivo:"Euskal Jaia",
+    comparsas:["Markinako Erraldoiak", "Lekeitio", "Bergara", "Deba", "Elgoibar"]
+},
+
+{
+    fecha:"9 noviembre 2024",
+    lugar:"PORTUGALETE",
+    motivo:"Erraldoi Eguna",
+    comparsas:["Zubira (Portugalete)", "Barakaldoko Erraldoiak", "Mairuek (Santutxu)"]
+},
+
+{
+    fecha:"5 mayo 2025",
+    lugar:"ORDUÑA",
+    motivo:"Fiestas de Ochomayo",
+    comparsas:["Bihotza (Orduña)", "Polunpak (Ortuella)", "Bermeoko Erraldoiak"]
+},
+
+{
+    fecha:"18 mayo 2025",
+    lugar:"BERMEO",
+    motivo:"Arrain Azoka",
+    comparsas:["Bermeoko Erraldoiak", "Mundakako Erraldoiak", "Mendi Alde (Santurtzi)"]
+},
+
+{
+    fecha:"8 junio 2025",
+    lugar:"SANTUTXU",
+    motivo:"Santutxu Kolorea",
+    comparsas:["Mairuek (Santutxu)", "Kietb (Bermeo)", "Zubira (Portugalete)", "Larraga"]
+},
+
+{
+    fecha:"28 junio 2025",
+    lugar:"LEKEITIO",
+    motivo:"400º Aniversario Lekeitio",
+    comparsas:["Lekeitio", "Markinako Erraldoiak", "Zubira (Portugalete)", "Buztintxuri", "Arai (Vitoria)", "Ekaitz (Beasain)", "Uharte"]
+},
+
+{
+    fecha:"15 julio 2025",
+    lugar:"Fiestas del Carmen",
+    motivo:"AMOREBIETA",
+    comparsas:["Amorebietako Erraldoiak", "Ondalan (Deusto)", "Kietb (Bermeo)", "Txantrea", "Bergara"]
+},
+
+{
+    fecha:"20 julio 2025",
+    lugar:"BARAKALDO",
+    motivo:"Fiestas del Carmen",
+    comparsas:["Laguntasuna (Barakaldo)", "Barakaldoko Erraldoiak", "Danetarako (Trapagaran)", "Birakari (Sestao)", "Agurra (Getxo)", "Zubira (Portugalete)", "Mendi Alde (Santurtzi)"]
+},
+
+{
+    fecha:"31 julio 2025",
+    lugar:"GETXO",
+    motivo:"Fiestas de Algorta",
+    comparsas:["Agurra (Getxo)", "Laguntasuna (Barakaldo)", "Barakaldoko Erraldoiak", "Pasaiako Erraldoiak"]
+},
+
+{
+    fecha:"24 agosto 2025",
+    lugar:"BILBAO",
+    motivo:"Aste Nagusia",
+    comparsas:["Comparsa de Bilbao", "Ondalan (Deusto)", "Mairuek (Santutxu)", "Bihotza (Orduña)", "Amurrio", "Loretope (Donosti)", "Sukila (Kanbo)", "Sanguesa", "Noain"]
+},
+
+{
+    fecha:"30 agosto 2025",
+    lugar:"TRAPAGARAN",
+    motivo:"Fiestas de San Ramón",
+    comparsas:["Danetarako (Trapagaran)", "Laguntasuna (Barakaldo)", "Barakaldoko Erraldoiak", "Castro", "Miranda de Ebro"]
+},
+
+{
+    fecha:"13 septiembre 2025",
+    lugar:"GETXO",
+    motivo:"Getxo Folk",
+    comparsas:["Agurra (Getxo)", "Txantrea", "Sanduzelaiko Erraldoiak"]
+},
+
+{
+    fecha:"14 septiembre 2025",
+    lugar:"BERMEO",
+    motivo:"Erraldoi Txikien Bilkura",
+    comparsas:["Kietb (Bermeo)", "Bergara Txiki", "Bera", "Ilargi Enea (Arrosadia)"]
+},
+
+{
+    fecha:"5 octubre 2025",
+    lugar:"MARKINA",
+    motivo:"Euskal Jaia",
+    comparsas:["Markinako Erraldoiak", "Kietb (Bermeo)", "Leiza", "Mutriku", "Berriatua"]
+},
+
+{
+    fecha:"8 noviembre 2025",
+    lugar:"PORTUGALETE",
+    motivo:"Erraldoi Eguna",
+    comparsas:["Zubira (Portugalete)", "Polunpak (Ortuella)", "Danetarako (Trapagaran)"]
+},
+
+{
+    fecha:"25 enero 2026",
+    lugar:"BARAKALDO",
+    motivo:"Fiestas de San Vicente",
+    comparsas:["Laguntasuna (Barakaldo)", "Barakaldoko Erraldoiak", "Danetarako (Trapagaran)"]
+},
+
+{
+    fecha:"21 marzo 2026",
+    lugar:"DEUSTO",
+    motivo:"Fiestas de Deusto",
+    comparsas:["Ondalan (Deusto)", "Bergara Txiki", "Arrasate Txiki"]
+},
+
+{
+    fecha:"10 mayo 2026",
+    lugar:"ORDUÑA",
+    motivo:"Fiestas de Ochomayo",
+    comparsas:["Bihotza (Orduña)", "Laguntasuna (Barakaldo)", "Pasaiako Erraldoiak", "Lezo"]
+},
+
+{
+    fecha:"7 junio 2026",
+    lugar:"SANTUTXU",
+    motivo:"Santutxu Kolorea",
+    comparsas:["Mairuek (Santutxu)", "Bihotza (Orduña)", "Kietb (Bermeo)", "Ezpelur (Barañain)"]
+},
+
+{
+    fecha:"14 junio 2026",
+    lugar:"BERMEO",
+    motivo:"20º Aniversario Bermeoko Konpartsa",
+    comparsas:["Bermeoko Erraldoiak", "Ondalan (Deusto)", "Mundakako Erraldoiak", "Lekeitioko Erraldoiak", "Bihotza (Orduña)", "Irrintzi (Donosti)", "Sanduzelaiko Erraldoiak", "Arrasateko Erraldoiak"]
+},
+
+];
+
+const contenedor = document.getElementById("eventos");
+
+document.getElementById("totalEventos").textContent = eventos.length;
+
+function mostrarEventos(lista){
+
+    contenedor.innerHTML = "";
+
+    const agrupados = {};
+
+    lista.forEach(evento => {
+
+        const año = evento.fecha.match(/\d{4}$/)?.[0];
+
+        if(!agrupados[año]){
+            agrupados[año] = [];
+        }
+
+        agrupados[año].push(evento);
+
+    });
+
+    Object.keys(agrupados)
+        .sort((a,b) => Number(a) - Number(b))
+        .forEach(año => {
+
+        contenedor.innerHTML += `
+            <h2 class="titulo-año">${año}</h2>
+            <div class="eventos-año" id="grupo-${año}"></div>
+        `;
+
+        const grupo = document.getElementById(`grupo-${año}`);
+
+        agrupados[año].forEach(evento => {
+
+            grupo.innerHTML += `
+
+                <div class="evento">
+
+                    <div class="evento-header">
+                        ${evento.lugar}
+                    </div>
+
+                    <div class="evento-content">
+
+                        <div class="fecha">
+                            📅 ${evento.fecha}
+                        </div>
+
+                        <div class="lugar">
+                            ${evento.lugar}
+                        </div>
+
+                        <div class="motivo">
+                            🎉 ${evento.motivo}
+                        </div>
+
+                        <div class="comparsas">
+
+                            ${evento.comparsas.map(comparsa =>
+                                `<span class="badge">${comparsa}</span>`
+                            ).join("")}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        });
+
+    });
+
+}
+
+mostrarEventos(eventos);
+
+document
+.getElementById("search")
+.addEventListener("input", function(){
+
+    const texto = this.value.toLowerCase();
+
+    const filtrados = eventos.filter(evento =>
+
+        evento.lugar.toLowerCase().includes(texto) ||
+        evento.motivo.toLowerCase().includes(texto) ||
+        evento.comparsas.join(" ").toLowerCase().includes(texto)
+
+    );
+
+    mostrarEventos(filtrados);
+
+});
+
+</script>
+
+</body>
+</html>
